@@ -3,6 +3,7 @@ package org.example.practical.view;
 import javafx.collections.FXCollections;
 import javafx.geometry.*;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -12,7 +13,6 @@ import org.example.practical.model.User;
 import org.example.practical.storage.DataStore;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +22,7 @@ public class UserDashboardView {
     public UserDashboardView(Stage stage, User user) {
         view.setPadding(new Insets(20));
         view.setAlignment(Pos.CENTER);
-        view.setMinWidth(825);
+        view.setMinWidth(900);
 
         Label header = new Label("Вітаємо, " + user.getUsername());
         TextField fromField = new TextField();
@@ -45,7 +45,11 @@ public class UserDashboardView {
                 new Label("Макс. ціна:"), maxPriceField,
                 searchBtn);
         searchBox.setAlignment(Pos.CENTER_LEFT);
-        view.getChildren().addAll(header, searchBox, flightListView, myTicketsBtn, myTicketsView);
+        Button backBtn = new Button("Назад");
+        backBtn.setOnAction(e -> {
+            stage.setScene(new Scene(new LoginView(stage).getView()));
+        });
+        view.getChildren().addAll(header, searchBox, flightListView, myTicketsBtn, myTicketsView, backBtn);
 
         searchBtn.setOnAction(e -> {
             String from = fromField.getText();

@@ -43,7 +43,11 @@ public class AdminDashboardView {
             stage.setScene(new Scene(new AdminFlightManagementView(stage).getView()));
         });
 
-        view.getChildren().addAll(header, refreshBtn, manageFlightsBtn, statsArea);
+        Button backBtn = new Button("Назад");
+        backBtn.setOnAction(e -> {
+            stage.setScene(new Scene(new LoginView(stage).getView()));
+        });
+        view.getChildren().addAll(header, refreshBtn, manageFlightsBtn, statsArea, backBtn);
     }
 
     public Parent getView() {
