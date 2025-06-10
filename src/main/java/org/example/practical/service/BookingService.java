@@ -16,6 +16,9 @@ public class BookingService {
     }
 
     public Booking reserveSeat(User user, Flight flight, Seat seat) {
+        if (seat == null) {
+            seat = flight.getAvailableSeats().get(0);
+        }
         if (seat.isTaken()) return null;
 
         seat.setTaken(true);
@@ -24,30 +27,6 @@ public class BookingService {
         bookings.add(booking);
         user.addTicket(ticket);
         return booking;
-    }
-
-    public void autoAssignSeats(Flight flight) {
-        List<Ticket> unassigned = new ArrayList<>();
-        for (Booking booking : bookings) {
-            if (booking.getTicket().getFlight().equals(flight)
-                    && booking.getTicket().getSeat() == null
-                    && !booking.isExpired()) {
-                unassigned.add(booking.getTicket());
-            }
-        }
-
-        List<Seat> availableSeats = flight.getAvailableSeats();
-        Iterator<Seat> seatIterator = availableSeats.iterator();
-
-        for (Ticket ticket : unassigned) {
-            if (!seatIterator.hasNext()) break;
-            Seat seat = seatIterator.next();
-            seat.setTaken(true);
-            ticket.getPassenger().getTickets().remove(ticket); // Remove old
-            Ticket newTicket = new Ticket(flight, ticket.getPassenger(), seat);
-            newTicket.setStatus(ticket.getStatus());
-            ticket.getPassenger().addTicket(newTicket);
-        }
     }
 
     public void expireOldBookings() {

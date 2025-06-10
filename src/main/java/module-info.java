@@ -8,7 +8,6 @@ module org.example.practical {
     requires net.synedra.validatorfx;
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
-    requires eu.hansolo.tilesfx;
 
     opens org.example.practical to javafx.fxml;
     exports org.example.practical;
